@@ -1,24 +1,20 @@
-//
-// Created by VeiTr on 27.03.2023.
-//
-
 #ifndef TIPKR_SCORE_H
 #define TIPKR_SCORE_H
 
-#include "libs/SDL2-2.26.4/x86_64-w64-mingw32/include/SDL2/SDL.h"
+#include <iostream>
 
 
 
 class Score {
 public:
     Score(); // конструктор класса
-    void Init(SDL_Renderer* renderer); // инициализация счета
-    void Render(SDL_Renderer* renderer); // отрисовать счет
+    void Init(); // инициализация счета
+    void Render(); // отрисовать счет
     void IncreaseScore(int points); // увеличить счет на заданное количество очков
     int GetScore(); // получить текущий счет игрока
-    SDL_Texture* GetText();
-    SDL_Texture* font;
-    SDL_Texture* text;
+    char GetText();
+    std::type_info font;
+    std::string text;
 private:
     int score; // текущий счет игрока
 
