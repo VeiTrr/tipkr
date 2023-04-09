@@ -6,7 +6,6 @@
 #include "Food.h"
 #include "Score.h"
 #include "Renderer.h"
-#include "libs/SDL2-2.26.4/x86_64-w64-mingw32/include/SDL2/SDL.h"
 
 class Game {
 public:
@@ -25,8 +24,6 @@ private:
     bool isPaused; // флаг, указывающий, находится ли игра в режиме паузы
     int screenWidth; // ширина окна игры
     int screenHeight; // высота окна игры
-    SDL_Window* window; // указатель на окно игры
-    SDL_Renderer* renderer; // указатель на рендер игры
     Snake snake; // змейка
     Food food; // еда на игровом поле
     Score score; // текущий счет игрока
