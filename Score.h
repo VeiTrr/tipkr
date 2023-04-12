@@ -1,25 +1,25 @@
 #ifndef TIPKR_SCORE_H
 #define TIPKR_SCORE_H
 
-#include <iostream>
 
-
+#include <SFML/Graphics.hpp>
 
 class Score {
 public:
-    Score(); // конструктор класса
-    void Init(); // инициализация счета
-    void Render(); // отрисовать счет
-    void IncreaseScore(int points); // увеличить счет на заданное количество очков
-    int GetScore(); // получить текущий счет игрока
-    char GetText();
-    std::type_info font;
-    std::string text;
+    Score();
+    void init();
+    void setposition(sf::Vector2f pos);
+    void setScore(int score);
+    sf::Text getScore();
+    int getScoreValue();
+
 private:
-    int score; // текущий счет игрока
+    sf::Text score;
+    sf::Font font;
+    sf::Vector2f position = sf::Vector2f(0, 0);
+    int scoreValue = 0;
 
 };
-
 
 
 #endif //TIPKR_SCORE_H

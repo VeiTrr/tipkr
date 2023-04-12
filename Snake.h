@@ -1,26 +1,36 @@
 #ifndef TIPKR_SNAKE_H
 #define TIPKR_SNAKE_H
 
+#include <SFML/Graphics.hpp>
 
-#include <vector>
-#include "Input.h"
 
 class Snake {
 public:
-    Snake(); // конструктор класса
-    void Init(); // инициализация змейки
-    void Render(); // отрисовка змейки на игровом поле
-    void Update(); // обновление состояния змейки
-    int GetHeadX(); // получить текущую координату X головы змейки
-    int GetHeadY(); // получить текущую координату Y головы змейки
-    void Grow(); // увеличить длину змейки
-    void Move(); // перемещение змейки на игровом поле
-    void HandleInput(Input input); // обработка ввода пользователя
-    bool CheckCollision(); // проверка на столкновение змейки со стенами или своим телом
-protected:
-    int direction; // текущее направление движения змейки
-};
+    Snake();
+    void init();
+    void grow();
+    void move(sf::RenderWindow &window);
+    void setdirection(int dir);
+    int getdirection();
+    void setspeed(float spd);
+    void setposition(sf::Vector2f pos);
+    int getlength();
+    sf::Vector2f getsize();
+    sf::RectangleShape getsnakehead();
+    sf::RectangleShape getsnakebody();
+    sf::RectangleShape getsnakebody(int i);
 
+
+private:
+    int direction;
+    int length = 3;
+    float speed = 0.1;
+    sf::Vector2f size = sf::Vector2f(20, 20);
+    sf::RectangleShape snakehead;
+    sf::RectangleShape *snakebody = new sf::RectangleShape[length];
+    sf::Clock clock;
+
+};
 
 
 #endif //TIPKR_SNAKE_H

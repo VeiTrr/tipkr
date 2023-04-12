@@ -1,15 +1,19 @@
 #ifndef TIPKR_INPUT_H
 #define TIPKR_INPUT_H
 
-
+#include "SFML/Graphics.hpp"
 
 class Input {
 public:
-    Input(); // конструктор класса
-    bool IsKeyDown(); // проверить, нажата ли клавиша
+    Input();
+    void init();
+    void HandleInput(sf::RenderWindow &window, sf::Event &event);
+
+
+
 
 private:
-    ; // массив, хранящий состояние клавиш
+
 };
 
 
