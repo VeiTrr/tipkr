@@ -2,29 +2,30 @@
 #include "Game.h"
 
 Game::Game() {
-    window.create(sf::VideoMode(800, 600), "Tipkr", sf::Style::Titlebar | sf::Style::Close, sf::ContextSettings(0, 0, 8));
+
+    window.create(sf::VideoMode(800, 600), "Snake", sf::Style::Titlebar | sf::Style::Close, sf::ContextSettings(0, 0, 8));
     window.setFramerateLimit(60);
-    //create start button
     startButton.setSize(sf::Vector2f(200.f, 100.f));
     startButton.setPosition(window.getSize().x/2 - startButton.getSize().x/2,  window.getSize().y/2 - 100);
     startButton.setFillColor(sf::Color::Green);
     startButton.setOutlineColor(sf::Color::White);
     startButton.setOutlineThickness(-2);
-    //create resume button
     resumeButton.setSize(sf::Vector2f(200.f, 100.f));
     resumeButton.setPosition(window.getSize().x/2 - resumeButton.getSize().x/2,  window.getSize().y/2 - 103);
     resumeButton.setFillColor(sf::Color::Green);
     resumeButton.setOutlineColor(sf::Color::White);
     resumeButton.setOutlineThickness(-2);
-    //create end button
     endButton.setSize(sf::Vector2f(200, 100));
     endButton.setPosition(window.getSize().x/2 - endButton.getSize().x/2,  window.getSize().y/2 );
     endButton.setFillColor(sf::Color::Red);
     endButton.setOutlineColor(sf::Color::White);
     endButton.setOutlineThickness(-2);
+    icon.loadFromFile("data/icon.png");
+    window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 }
 
 void Game::run() {
+
     snake.init();
     food.init();
     score.init();
@@ -223,7 +224,7 @@ void Game::drawPauseScreen() {
     text.setString("Paused");
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::White);
-    text.setPosition(300, 100);
+    text.setPosition(window.getSize().x / 2 - 50, window.getSize().y / 2 - 200);
     resumeButtontext.setFont(font);
     resumeButtontext.setString("Resume");
     resumeButtontext.setCharacterSize(24);

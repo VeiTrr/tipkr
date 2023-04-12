@@ -36,6 +36,7 @@ private:
     Input input;
     Renderer renderer;
     sf::Clock clock;
+    sf::Image icon;
 };
 
 
