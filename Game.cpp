@@ -3,7 +3,7 @@
 
 Game::Game() {
 
-    window.create(sf::VideoMode(800, 600), "Snake", sf::Style::Titlebar | sf::Style::Close, sf::ContextSettings(0, 0, 8));
+    window.create(sf::VideoMode(800, 600), "Snake",sf::Style::Titlebar  | sf::Style::Resize  | sf::Style::Close, sf::ContextSettings(0, 0, 8));
     window.setFramerateLimit(60);
     startButton.setSize(sf::Vector2f(200.f, 100.f));
     startButton.setPosition(window.getSize().x/2 - startButton.getSize().x/2,  window.getSize().y/2 - 100);
