@@ -3,7 +3,7 @@
 
 Game::Game() {
 
-    window.create(sf::VideoMode(800, 600), "Snake", sf::Style::Titlebar | sf::Style::Close, sf::ContextSettings(0, 0, 8));
+    window.create(sf::VideoMode(800, 600), "Snake",sf::Style::Titlebar  | sf::Style::Resize  | sf::Style::Close, sf::ContextSettings(0, 0, 8));
     window.setFramerateLimit(60);
     startButton.setSize(sf::Vector2f(200.f, 100.f));
     startButton.setPosition(window.getSize().x/2 - startButton.getSize().x/2,  window.getSize().y/2 - 100);
@@ -145,15 +145,15 @@ void Game::reset() {
 
 void Game::checkCollision() {
     if (snake.getsnakehead().getPosition().x < 0) {
-        snake.setposition(sf::Vector2f(getWindowsize().x, snake.getsnakehead().getPosition().y));
+        snake.setposition(sf::Vector2f(getWindowsize().x - 20, snake.getsnakehead().getPosition().y));
     }
-    if (snake.getsnakehead().getPosition().x > getWindowsize().x) {
+    if (snake.getsnakehead().getPosition().x > getWindowsize().x - 20) {
         snake.setposition(sf::Vector2f(0, snake.getsnakehead().getPosition().y));
     }
     if (snake.getsnakehead().getPosition().y < 0) {
-        snake.setposition(sf::Vector2f(snake.getsnakehead().getPosition().x, getWindowsize().y));
+        snake.setposition(sf::Vector2f(snake.getsnakehead().getPosition().x, getWindowsize().y - 20));
     }
-    if (snake.getsnakehead().getPosition().y > getWindowsize().y) {
+    if (snake.getsnakehead().getPosition().y > getWindowsize().y - 20) {
         snake.setposition(sf::Vector2f(snake.getsnakehead().getPosition().x, 0));
     }
     for (int i = 0; i < snake.getlength(); i++) {
@@ -180,6 +180,11 @@ void Game::checkCollision() {
 
 
 void Game::drawWelcomeScreen() {
+    startButton.setSize(sf::Vector2f(200.f, 100.f));
+    startButton.setPosition(window.getSize().x/2 - startButton.getSize().x/2,  window.getSize().y/2 - 100);
+    startButton.setFillColor(sf::Color::Green);
+    startButton.setOutlineColor(sf::Color::White);
+    startButton.setOutlineThickness(-2);
     sf::Font font;
     if (!font.loadFromFile("data/arial.ttf")) {
         std::cout << "Error loading font" << std::endl;
@@ -191,12 +196,12 @@ void Game::drawWelcomeScreen() {
     text.setString("Welcome to Snake");
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::White);
-    text.setPosition(300, 100);
+    text.setPosition(window.getSize().x/2 - 100, window.getSize().y/2 - 200);
     text1.setFont(font);
     text1.setString("@Created as a course work for MIREA by Ivan Maltsev");
     text1.setCharacterSize(24);
     text1.setFillColor(sf::Color::White);
-    text1.setPosition(100, window.getSize().y - 100);
+    text1.setPosition(window.getSize().x/2 - 300, window.getSize().y - 100);
     startButtontext.setFont(font);
     startButtontext.setString("Start");
     startButtontext.setCharacterSize(24);
@@ -213,6 +218,16 @@ void Game::drawWelcomeScreen() {
 }
 
 void Game::drawPauseScreen() {
+    resumeButton.setSize(sf::Vector2f(200.f, 100.f));
+    resumeButton.setPosition(window.getSize().x/2 - resumeButton.getSize().x/2,  window.getSize().y/2 - 103);
+    resumeButton.setFillColor(sf::Color::Green);
+    resumeButton.setOutlineColor(sf::Color::White);
+    resumeButton.setOutlineThickness(-2);
+    endButton.setSize(sf::Vector2f(200, 100));
+    endButton.setPosition(window.getSize().x/2 - endButton.getSize().x/2,  window.getSize().y/2 );
+    endButton.setFillColor(sf::Color::Red);
+    endButton.setOutlineColor(sf::Color::White);
+    endButton.setOutlineThickness(-2);
     sf::Font font;
     if (!font.loadFromFile("data/arial.ttf")) {
         std::cout << "Error loading font" << std::endl;

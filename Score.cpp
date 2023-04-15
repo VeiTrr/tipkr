@@ -10,7 +10,7 @@ void Score::init() {
     score.setCharacterSize(24);
     score.setFillColor(sf::Color::White);
     score.setPosition(position);
-    score.setString("Score: 0");
+    setScore(0);
 }
 
 void Score::setposition(sf::Vector2f pos) {
