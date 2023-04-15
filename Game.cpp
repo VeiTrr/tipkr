@@ -180,6 +180,11 @@ void Game::checkCollision() {
 
 
 void Game::drawWelcomeScreen() {
+    startButton.setSize(sf::Vector2f(200.f, 100.f));
+    startButton.setPosition(window.getSize().x/2 - startButton.getSize().x/2,  window.getSize().y/2 - 100);
+    startButton.setFillColor(sf::Color::Green);
+    startButton.setOutlineColor(sf::Color::White);
+    startButton.setOutlineThickness(-2);
     sf::Font font;
     if (!font.loadFromFile("data/arial.ttf")) {
         std::cout << "Error loading font" << std::endl;
@@ -191,12 +196,12 @@ void Game::drawWelcomeScreen() {
     text.setString("Welcome to Snake");
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::White);
-    text.setPosition(300, 100);
+    text.setPosition(window.getSize().x/2 - 100, window.getSize().y/2 - 200);
     text1.setFont(font);
     text1.setString("@Created as a course work for MIREA by Ivan Maltsev");
     text1.setCharacterSize(24);
     text1.setFillColor(sf::Color::White);
-    text1.setPosition(100, window.getSize().y - 100);
+    text1.setPosition(window.getSize().x/2 - 300, window.getSize().y - 100);
     startButtontext.setFont(font);
     startButtontext.setString("Start");
     startButtontext.setCharacterSize(24);
@@ -213,6 +218,16 @@ void Game::drawWelcomeScreen() {
 }
 
 void Game::drawPauseScreen() {
+    resumeButton.setSize(sf::Vector2f(200.f, 100.f));
+    resumeButton.setPosition(window.getSize().x/2 - resumeButton.getSize().x/2,  window.getSize().y/2 - 103);
+    resumeButton.setFillColor(sf::Color::Green);
+    resumeButton.setOutlineColor(sf::Color::White);
+    resumeButton.setOutlineThickness(-2);
+    endButton.setSize(sf::Vector2f(200, 100));
+    endButton.setPosition(window.getSize().x/2 - endButton.getSize().x/2,  window.getSize().y/2 );
+    endButton.setFillColor(sf::Color::Red);
+    endButton.setOutlineColor(sf::Color::White);
+    endButton.setOutlineThickness(-2);
     sf::Font font;
     if (!font.loadFromFile("data/arial.ttf")) {
         std::cout << "Error loading font" << std::endl;
