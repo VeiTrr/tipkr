@@ -15,8 +15,6 @@ set(SFML_DIR "C:/prg/SFML/lib/cmake/SFML")
 find_package(SFML COMPONENTS system window graphics network audio REQUIRED)
 target_link_libraries(tipkr sfml-system sfml-window sfml-graphics sfml-network sfml-audio)
 set(CMAKE_EXE_LINKER_FLAGS -static)
-set(CPACK_PACKAGE_VENDOR "VT games")
-set_target_properties(tipkr PROPERTIES COMPANY_NAME "VT games")
 
 
 
