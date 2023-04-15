@@ -145,15 +145,15 @@ void Game::reset() {
 
 void Game::checkCollision() {
     if (snake.getsnakehead().getPosition().x < 0) {
-        snake.setposition(sf::Vector2f(getWindowsize().x, snake.getsnakehead().getPosition().y));
+        snake.setposition(sf::Vector2f(getWindowsize().x - 20, snake.getsnakehead().getPosition().y));
     }
-    if (snake.getsnakehead().getPosition().x > getWindowsize().x) {
+    if (snake.getsnakehead().getPosition().x > getWindowsize().x - 20) {
         snake.setposition(sf::Vector2f(0, snake.getsnakehead().getPosition().y));
     }
     if (snake.getsnakehead().getPosition().y < 0) {
-        snake.setposition(sf::Vector2f(snake.getsnakehead().getPosition().x, getWindowsize().y));
+        snake.setposition(sf::Vector2f(snake.getsnakehead().getPosition().x, getWindowsize().y - 20));
     }
-    if (snake.getsnakehead().getPosition().y > getWindowsize().y) {
+    if (snake.getsnakehead().getPosition().y > getWindowsize().y - 20) {
         snake.setposition(sf::Vector2f(snake.getsnakehead().getPosition().x, 0));
     }
     for (int i = 0; i < snake.getlength(); i++) {
