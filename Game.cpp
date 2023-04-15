@@ -173,6 +173,46 @@ void Game::checkCollision() {
         food.setposition(temp);
         score.setScore(score.getScoreValue() + 1);
     }
+    if (food.getfood().getPosition().y > getWindowsize().y - 20) {
+        sf::Vector2f temp = sf::Vector2f(rand() % (getWindowsize().x - 40), rand() % (getWindowsize().y - 40));
+        if (std::fmod(temp.x, 20.0f) != 0.0f) {
+            temp.x = temp.x - std::fmod(temp.x, 20.0f);
+        }
+        if (std::fmod(temp.y, 20.0f) != 0.0f) {
+            temp.y = temp.y - std::fmod(temp.y, 20.0f);
+        }
+        food.setposition(temp);
+    }
+    if (food.getfood().getPosition().x < 0) {
+        sf::Vector2f temp = sf::Vector2f(rand() % (getWindowsize().x - 40), rand() % (getWindowsize().y - 40));
+        if (std::fmod(temp.x, 20.0f) != 0.0f) {
+            temp.x = temp.x - std::fmod(temp.x, 20.0f);
+        }
+        if (std::fmod(temp.y, 20.0f) != 0.0f) {
+            temp.y = temp.y - std::fmod(temp.y, 20.0f);
+        }
+        food.setposition(temp);
+    }
+    if (food.getfood().getPosition().x > getWindowsize().x - 20) {
+        sf::Vector2f temp = sf::Vector2f(rand() % (getWindowsize().x - 40), rand() % (getWindowsize().y - 40));
+        if (std::fmod(temp.x, 20.0f) != 0.0f) {
+            temp.x = temp.x - std::fmod(temp.x, 20.0f);
+        }
+        if (std::fmod(temp.y, 20.0f) != 0.0f) {
+            temp.y = temp.y - std::fmod(temp.y, 20.0f);
+        }
+        food.setposition(temp);
+    }
+    if (food.getfood().getPosition().y < 0) {
+        sf::Vector2f temp = sf::Vector2f(rand() % (getWindowsize().x - 40), rand() % (getWindowsize().y - 40));
+        if (std::fmod(temp.x, 20.0f) != 0.0f) {
+            temp.x = temp.x - std::fmod(temp.x, 20.0f);
+        }
+        if (std::fmod(temp.y, 20.0f) != 0.0f) {
+            temp.y = temp.y - std::fmod(temp.y, 20.0f);
+        }
+        food.setposition(temp);
+    }
 
 
 
