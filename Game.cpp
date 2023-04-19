@@ -5,21 +5,21 @@ Game::Game() {
 
     window.create(sf::VideoMode(800, 600), "Snake",sf::Style::Titlebar  | sf::Style::Resize  | sf::Style::Close, sf::ContextSettings(0, 0, 8));
     window.setFramerateLimit(60);
-    startButton.setSize(sf::Vector2f(200.f, 100.f));
-    startButton.setPosition(window.getSize().x/2 - startButton.getSize().x/2,  window.getSize().y/2 - 100);
-    startButton.setFillColor(sf::Color::Green);
-    startButton.setOutlineColor(sf::Color::White);
-    startButton.setOutlineThickness(-2);
-    resumeButton.setSize(sf::Vector2f(200.f, 100.f));
-    resumeButton.setPosition(window.getSize().x/2 - resumeButton.getSize().x/2,  window.getSize().y/2 - 103);
-    resumeButton.setFillColor(sf::Color::Green);
-    resumeButton.setOutlineColor(sf::Color::White);
-    resumeButton.setOutlineThickness(-2);
-    endButton.setSize(sf::Vector2f(200, 100));
-    endButton.setPosition(window.getSize().x/2 - endButton.getSize().x/2,  window.getSize().y/2 );
-    endButton.setFillColor(sf::Color::Red);
-    endButton.setOutlineColor(sf::Color::White);
-    endButton.setOutlineThickness(-2);
+//    startButton.setSize(sf::Vector2f(200.f, 100.f));
+//    startButton.setPosition(window.getSize().x/2 - startButton.getSize().x/2,  window.getSize().y/2 - 100);
+//    startButton.setFillColor(sf::Color::Green);
+//    startButton.setOutlineColor(sf::Color::White);
+//    startButton.setOutlineThickness(-2);
+//    resumeButton.setSize(sf::Vector2f(200.f, 100.f));
+//    resumeButton.setPosition(window.getSize().x/2 - resumeButton.getSize().x/2,  window.getSize().y/2 - 103);
+//    resumeButton.setFillColor(sf::Color::Green);
+//    resumeButton.setOutlineColor(sf::Color::White);
+//    resumeButton.setOutlineThickness(-2);
+//    endButton.setSize(sf::Vector2f(200, 100));
+//    endButton.setPosition(window.getSize().x/2 - endButton.getSize().x/2,  window.getSize().y/2 );
+//    endButton.setFillColor(sf::Color::Red);
+//    endButton.setOutlineColor(sf::Color::White);
+//    endButton.setOutlineThickness(-2);
     icon.loadFromFile("data/icon.png");
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 }
@@ -229,14 +229,14 @@ void Game::drawWelcomeScreen() {
     if (!font.loadFromFile("data/arial.ttf")) {
         std::cout << "Error loading font" << std::endl;
     }
-    sf::Text text;
+    sf::Text texta;
     sf::Text text1;
     sf::Text startButtontext;
-    text.setFont(font);
-    text.setString("Welcome to Snake");
-    text.setCharacterSize(24);
-    text.setFillColor(sf::Color::White);
-    text.setPosition(window.getSize().x/2 - 100, window.getSize().y/2 - 200);
+    texta.setFont(font);
+    texta.setString("Welcome to Snake");
+    texta.setCharacterSize(24);
+    texta.setFillColor(sf::Color::White);
+    texta.setPosition(window.getSize().x / 2 - 100, window.getSize().y / 2 - 200);
     text1.setFont(font);
     text1.setString("@Created as a course work for MIREA by Ivan Maltsev");
     text1.setCharacterSize(24);
@@ -250,9 +250,8 @@ void Game::drawWelcomeScreen() {
     startButtontext.setOutlineThickness(1);
     startButtontext.setPosition(startButton.getPosition().x + 68, startButton.getPosition().y + 35);
 
-
+    window.draw(texta);
     window.draw(startButton);
-    window.draw(text);
     window.draw(text1);
     window.draw(startButtontext);
 }
@@ -295,9 +294,9 @@ void Game::drawPauseScreen() {
     endButtontext.setOutlineThickness(1);
     endButtontext.setPosition(endButton.getPosition().x + 74, endButton.getPosition().y + 35);
 
+    window.draw(text);
     window.draw(resumeButton);
     window.draw(endButton);
-    window.draw(text);
     window.draw(resumeButtontext);
     window.draw(endButtontext);
 }
