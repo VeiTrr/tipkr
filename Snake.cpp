@@ -27,6 +27,29 @@ void Snake::init() {
     direction = -1;
 }
 
+void Snake::initmultiplayer() {
+    snakehead.setSize(getsize());
+    snakehead.setPosition(200, 300);
+    snakehead.setFillColor(sf::Color(1, 50, 32));
+    snakehead.setOutlineColor(sf::Color::White);
+    snakehead.setOutlineThickness(-2);
+    snakebody[0].setSize(getsize());
+    snakebody[0].setPosition(snakehead.getPosition().x,snakehead.getPosition().y + getsize().y);
+    snakebody[0].setFillColor(sf::Color::Green);
+    snakebody[0].setOutlineColor(sf::Color::Black);
+    snakebody[0].setOutlineThickness(1);
+
+    for (int i = 1; i < 3; i++) {
+        snakebody[i].setSize(getsize());
+        snakebody[i].setPosition(snakebody[i-1].getPosition().x, snakebody[i-1].getPosition().y + getsize().x);
+        snakebody[i].setFillColor(sf::Color::Green);
+        snakebody[i].setOutlineColor(sf::Color::Black);
+        snakebody[i].setOutlineThickness(1);
+    }
+    length = 3;
+    direction = -1;
+}
+
 void Snake::grow() {
     sf::RectangleShape *temp = new sf::RectangleShape[length + 1];
     for (int i = 0; i < length; i++) {
@@ -139,4 +162,11 @@ sf::Vector2f Snake::getsize() {
 
 void Snake::setposition(sf::Vector2f pos) {
     snakehead.setPosition(pos);
+}
+
+void Snake::setColor(sf::Color color, sf::Color color2) {
+    snakehead.setFillColor(color);
+    for (int i = 0; i < length; i++) {
+        snakebody[i].setFillColor(color2);
+    }
 }

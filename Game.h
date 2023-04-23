@@ -19,20 +19,29 @@ public:
 private:
     void drawWelcomeScreen();
     void drawPauseScreen();
-    void drawGame();
+    void drawSPGame();
+    void drawMPGame();
+    void drawEndScreen();
     void processEvents();
     void render();
     void reset();
-    void checkCollision();
+    void checkCollisionSP();
+    void checkCollisionMP();
     sf::RenderWindow window;
-    sf::RectangleShape startButton;
+    sf::RectangleShape SPstart; //single player start
+    sf::RectangleShape MPstart; //multi player start
     sf::RectangleShape resumeButton;
     sf::RectangleShape endButton;
     bool isStarted = false;
     bool isPaused = false;
+    bool isSinglePlayer = false;
+    bool winnerisPlayer2 = false;
+    bool isEnd = false;
     Snake snake;
+    Snake snake2;
     Food food;
     Score score;
+    Score score2;
     Input input;
     Renderer renderer;
     sf::Clock clock;

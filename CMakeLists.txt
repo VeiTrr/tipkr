@@ -9,7 +9,7 @@ if (CMAKE_BUILD_TYPE STREQUAL "Release")
     add_executable(tipkr main.cpp Game.cpp Game.h Snake.cpp Snake.h Food.cpp Food.h Score.cpp Score.h Input.cpp Input.h Renderer.cpp Renderer.h data/resources.rc)
 endif ()
 
-file(CREATE_LINK ${CMAKE_SOURCE_DIR}/data ${CMAKE_BINARY_DIR}/data SYMBOLIC)
+file(COPY data DESTINATION ${CMAKE_BINARY_DIR})
 set(SFML_STATIC_LIBRARIES TRUE)
 set(SFML_DIR "C:/prg/SFML/lib/cmake/SFML")
 find_package(SFML COMPONENTS system window graphics network audio REQUIRED)
