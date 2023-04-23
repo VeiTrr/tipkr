@@ -15,6 +15,7 @@ public:
     int getdirection();
     void setspeed(float spd);
     void setposition(sf::Vector2f pos);
+    void setsize (sf::Vector2f size);
     void setColor(sf::Color color,sf::Color color2);
     int getlength();
     sf::Vector2f getsize();
