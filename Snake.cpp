@@ -164,6 +164,10 @@ void Snake::setposition(sf::Vector2f pos) {
     snakehead.setPosition(pos);
 }
 
+void Snake::setsize(sf::Vector2f size) {
+    this->size = size;
+}
+
 void Snake::setColor(sf::Color color, sf::Color color2) {
     snakehead.setFillColor(color);
     for (int i = 0; i < length; i++) {

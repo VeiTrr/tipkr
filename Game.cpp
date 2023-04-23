@@ -89,6 +89,7 @@ void Game::processEvents() {
                         reset();
                         isStarted = false;
                         isPaused = false;
+                        isEnd = false;
                         break;
                     }
                 }
@@ -352,26 +353,14 @@ void Game::checkCollisionMP() {
         }
         food.setposition(temp);
     }
-
-    //check collision with other snake
-    if (snake.getsnakehead().getGlobalBounds().intersects(snake2.getsnakehead().getGlobalBounds())) {
-        reset();
-    }
     for (int i = 0; i < snake2.getlength(); i++) {
-        if (snake.getsnakehead().getGlobalBounds().intersects(snake2.getsnakebody(i).getGlobalBounds())) {
+        if (snake.getsnakehead().getPosition() == snake2.getsnakebody(i).getPosition()) {
             reset();
-            isEnd = true;
-            winnerisPlayer2 = false;
         }
     }
-    if (snake2.getsnakehead().getGlobalBounds().intersects(snake.getsnakehead().getGlobalBounds())) {
-        reset();
-    }
     for (int i = 0; i < snake.getlength(); i++) {
-        if (snake2.getsnakehead().getGlobalBounds().intersects(snake.getsnakebody(i).getGlobalBounds())) {
+        if (snake2.getsnakehead().getPosition() == snake.getsnakebody(i).getPosition()) {
             reset();
-            isEnd = true;
-            winnerisPlayer2 = true;
         }
     }
 }
