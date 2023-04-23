@@ -8,12 +8,14 @@ class Snake {
 public:
     Snake();
     void init();
+    void initmultiplayer();
     void grow();
     void move(sf::RenderWindow &window);
     void setdirection(int dir);
     int getdirection();
     void setspeed(float spd);
     void setposition(sf::Vector2f pos);
+    void setColor(sf::Color color,sf::Color color2);
     int getlength();
     sf::Vector2f getsize();
     sf::RectangleShape getsnakehead();
