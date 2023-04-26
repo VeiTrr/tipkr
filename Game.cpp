@@ -298,6 +298,8 @@ void Game::checkCollisionMP() {
     for (int i = 0; i < snake.getlength(); i++) {
         if (snake.getsnakehead().getPosition() == snake.getsnakebody(i).getPosition()) {
             reset();
+            isEnd = true;
+            winnerisPlayer2 = true;
         }
     }
 
@@ -316,6 +318,8 @@ void Game::checkCollisionMP() {
     for (int i = 0; i < snake2.getlength(); i++) {
         if (snake2.getsnakehead().getPosition() == snake2.getsnakebody(i).getPosition()) {
             reset();
+            isEnd = true;
+            winnerisPlayer2 = false;
         }
     }
     if (snake.getsnakehead().getGlobalBounds().intersects(food.getfood().getGlobalBounds())) {
@@ -356,11 +360,15 @@ void Game::checkCollisionMP() {
     for (int i = 0; i < snake2.getlength(); i++) {
         if (snake.getsnakehead().getPosition() == snake2.getsnakebody(i).getPosition()) {
             reset();
+            isEnd = true;
+            winnerisPlayer2 = true;
         }
     }
     for (int i = 0; i < snake.getlength(); i++) {
         if (snake2.getsnakehead().getPosition() == snake.getsnakebody(i).getPosition()) {
             reset();
+            isEnd = true;
+            winnerisPlayer2 = false;
         }
     }
 }
@@ -456,9 +464,9 @@ void Game::drawPauseScreen() {
     endButtontext.setOutlineThickness(1);
     endButtontext.setPosition(endButton.getPosition().x + 74, endButton.getPosition().y + 35);
 
+    window.draw(text);
     window.draw(resumeButton);
     window.draw(endButton);
-    window.draw(text);
     window.draw(resumeButtontext);
     window.draw(endButtontext);
 }
@@ -531,8 +539,8 @@ void Game::drawEndScreen() {
     endButton.setFillColor(sf::Color::Red);
     endButton.setOutlineColor(sf::Color::White);
     endButton.setOutlineThickness(-2);
-    window.draw(endButton);
-    window.draw(EndButtontext);
     window.draw(text);
     window.draw(text1);
+    window.draw(endButton);
+    window.draw(EndButtontext);
 }
