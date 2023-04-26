@@ -299,7 +299,7 @@ void Game::checkCollisionMP() {
         if (snake.getsnakehead().getPosition() == snake.getsnakebody(i).getPosition()) {
             reset();
             isEnd = true;
-            winnerisPlayer2 = true;
+            winnerisPlayer2 = false;
         }
     }
 
@@ -319,7 +319,7 @@ void Game::checkCollisionMP() {
         if (snake2.getsnakehead().getPosition() == snake2.getsnakebody(i).getPosition()) {
             reset();
             isEnd = true;
-            winnerisPlayer2 = false;
+            winnerisPlayer2 = true;
         }
     }
     if (snake.getsnakehead().getGlobalBounds().intersects(food.getfood().getGlobalBounds())) {
@@ -361,14 +361,14 @@ void Game::checkCollisionMP() {
         if (snake.getsnakehead().getPosition() == snake2.getsnakebody(i).getPosition()) {
             reset();
             isEnd = true;
-            winnerisPlayer2 = true;
+            winnerisPlayer2 = false;
         }
     }
     for (int i = 0; i < snake.getlength(); i++) {
         if (snake2.getsnakehead().getPosition() == snake.getsnakebody(i).getPosition()) {
             reset();
             isEnd = true;
-            winnerisPlayer2 = false;
+            winnerisPlayer2 = true;
         }
     }
 }
