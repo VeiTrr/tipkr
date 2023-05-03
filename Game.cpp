@@ -297,6 +297,8 @@ void Game::checkCollisionMP() {
     }
     for (int i = 0; i < snake.getlength(); i++) {
         if (snake.getsnakehead().getPosition() == snake.getsnakebody(i).getPosition()) {
+            endscore = score;
+            endscore2 = score2;
             reset();
             isEnd = true;
             winnerisPlayer2 = false;
@@ -317,6 +319,8 @@ void Game::checkCollisionMP() {
     }
     for (int i = 0; i < snake2.getlength(); i++) {
         if (snake2.getsnakehead().getPosition() == snake2.getsnakebody(i).getPosition()) {
+            endscore = score;
+            endscore2 = score2;
             reset();
             isEnd = true;
             winnerisPlayer2 = true;
@@ -359,6 +363,8 @@ void Game::checkCollisionMP() {
     }
     for (int i = 0; i < snake2.getlength(); i++) {
         if (snake.getsnakehead().getPosition() == snake2.getsnakebody(i).getPosition()) {
+            endscore = score;
+            endscore2 = score2;
             reset();
             isEnd = true;
             winnerisPlayer2 = false;
@@ -366,11 +372,27 @@ void Game::checkCollisionMP() {
     }
     for (int i = 0; i < snake.getlength(); i++) {
         if (snake2.getsnakehead().getPosition() == snake.getsnakebody(i).getPosition()) {
+            endscore = score;
+            endscore2 = score2;
             reset();
             isEnd = true;
             winnerisPlayer2 = true;
         }
     }
+
+    //check collision of snakes bodie and snake2 bodie
+    for (int i = 0; i < snake.getlength(); i++) {
+        for (int j = 0; j < snake2.getlength(); j++) {
+            if (snake.getsnakebody(i).getPosition() == snake2.getsnakebody(j).getPosition()) {
+                endscore = score;
+                endscore2 = score2;
+                reset();
+                isEnd = true;
+                winnerisPlayer2 = false;
+            }
+        }
+    }
+
 }
 
 
@@ -523,7 +545,7 @@ void Game::drawEndScreen() {
     text.setFillColor(sf::Color::White);
     text.setPosition(window.getSize().x/2 - 50, window.getSize().y/2 - 200);
     text1.setFont(font);
-    text1.setString("Player 1 score: " + std::to_string(score.getScoreValue()) + "\n" + "Player 2 score: " + std::to_string(score2.getScoreValue()));
+    text1.setString("Player 1 score: " + std::to_string(endscore.getScoreValue()) + "\n" + "Player 2 score: " + std::to_string(endscore2.getScoreValue()));
     text1.setCharacterSize(24);
     text1.setFillColor(sf::Color::White);
     text1.setPosition(window.getSize().x/2 - 200, window.getSize().y/2 - 100);

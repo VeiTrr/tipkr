@@ -42,6 +42,8 @@ private:
     Food food;
     Score score;
     Score score2;
+    Score endscore;
+    Score endscore2;
     Input input;
     Renderer renderer;
     sf::Clock clock;
