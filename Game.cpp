@@ -5,26 +5,31 @@ Game::Game() {
 
     window.create(sf::VideoMode(800, 600), "Snake",sf::Style::Titlebar  | sf::Style::Resize  | sf::Style::Close, sf::ContextSettings(0, 0, 8));
     window.setFramerateLimit(60);
+
     SPstart.setSize(sf::Vector2f(200.f, 100.f));
     SPstart.setPosition(window.getSize().x / 2 - SPstart.getSize().x / 2, window.getSize().y / 2 - 100);
     SPstart.setFillColor(sf::Color::Green);
     SPstart.setOutlineColor(sf::Color::White);
     SPstart.setOutlineThickness(-2);
+
     MPstart.setSize(sf::Vector2f(200, 100));
     MPstart.setPosition(window.getSize().x / 2 - MPstart.getSize().x / 2, window.getSize().y / 2);
     MPstart.setFillColor(sf::Color::Red);
     MPstart.setOutlineColor(sf::Color::White);
     MPstart.setOutlineThickness(-2);
+
     resumeButton.setSize(sf::Vector2f(200.f, 100.f));
     resumeButton.setPosition(window.getSize().x/2 - resumeButton.getSize().x/2,  window.getSize().y/2 - 103);
     resumeButton.setFillColor(sf::Color::Green);
     resumeButton.setOutlineColor(sf::Color::White);
     resumeButton.setOutlineThickness(-2);
+
     endButton.setSize(sf::Vector2f(200, 100));
     endButton.setPosition(window.getSize().x/2 - endButton.getSize().x/2,  window.getSize().y/2 );
     endButton.setFillColor(sf::Color::Red);
     endButton.setOutlineColor(sf::Color::White);
     endButton.setOutlineThickness(-2);
+
     icon.loadFromFile("data/icon.png");
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
 }
@@ -93,6 +98,13 @@ void Game::processEvents() {
                         break;
                     }
                 }
+                if (event.mouseButton.x >= (HardCheckBox.getPosition().x ) && event.mouseButton.x <= (HardCheckBox.getPosition().x + HardCheckBox.getSize().x) && !isStarted && !isPaused && !isEnd) {
+                    if (event.mouseButton.y >= (HardCheckBox.getPosition().y ) && event.mouseButton.y <= (HardCheckBox.getPosition().y + HardCheckBox.getSize().y)) {
+                        std::cout << "Hard mode button clicked" << std::endl;
+                        isHard = !isHard;
+                        break;
+                    }
+                }
             }
         }
         if (event.type == sf::Event::KeyPressed) {
@@ -151,6 +163,16 @@ void Game::processEvents() {
                 }
             }
         }
+        //test func
+//        if (event.type == sf::Event::KeyPressed) {
+//            if (event.key.code == sf::Keyboard::Space) {
+//                snake.grow();
+//                score.setScore(score.getScoreValue() + 10);
+//                if (score.getScoreValue() % 10 == 0) {
+//                    speed = speed - 1;
+//                }
+//            }
+//        }
     }
 }
 
@@ -180,6 +202,7 @@ void Game::render() {
 }
 
 void Game::reset() {
+    speed = 100;
     if (isSinglePlayer) {
         snake.init();
         food.init();
@@ -210,6 +233,7 @@ void Game::reset() {
 }
 
 void Game::checkCollisionSP() {
+    //check collision with borders
     if (snake.getsnakehead().getPosition().x < 0) {
         snake.setposition(sf::Vector2f(getWindowsize().x - 20, snake.getsnakehead().getPosition().y));
     }
@@ -222,11 +246,13 @@ void Game::checkCollisionSP() {
     if (snake.getsnakehead().getPosition().y > getWindowsize().y - 20) {
         snake.setposition(sf::Vector2f(snake.getsnakehead().getPosition().x, 0));
     }
+    //check collision with body
     for (int i = 0; i < snake.getlength(); i++) {
         if (snake.getsnakehead().getPosition() == snake.getsnakebody(i).getPosition()) {
             reset();
         }
     }
+    //check collision with food
     if (snake.getsnakehead().getGlobalBounds().intersects(food.getfood().getGlobalBounds())) {
         snake.grow();
         sf::Vector2f temp = sf::Vector2f(rand() % (getWindowsize().x - 40), rand() % (getWindowsize().y - 40));
@@ -238,7 +264,11 @@ void Game::checkCollisionSP() {
         }
         food.setposition(temp);
         score.setScore(score.getScoreValue() + 1);
+        if (score.getScoreValue() % 10 == 0) {   //increase speed every 10 points
+            speed = speed - 1;
+        }
     }
+    //check food position
     if (food.getfood().getPosition().y > getWindowsize().y - 20) {
         sf::Vector2f temp = sf::Vector2f(rand() % (getWindowsize().x - 40), rand() % (getWindowsize().y - 40));
         if (std::fmod(temp.x, 20.0f) != 0.0f) {
@@ -249,27 +279,7 @@ void Game::checkCollisionSP() {
         }
         food.setposition(temp);
     }
-    if (food.getfood().getPosition().x < 0) {
-        sf::Vector2f temp = sf::Vector2f(rand() % (getWindowsize().x - 40), rand() % (getWindowsize().y - 40));
-        if (std::fmod(temp.x, 20.0f) != 0.0f) {
-            temp.x = temp.x - std::fmod(temp.x, 20.0f);
-        }
-        if (std::fmod(temp.y, 20.0f) != 0.0f) {
-            temp.y = temp.y - std::fmod(temp.y, 20.0f);
-        }
-        food.setposition(temp);
-    }
-    if (food.getfood().getPosition().x > getWindowsize().x - 20) {
-        sf::Vector2f temp = sf::Vector2f(rand() % (getWindowsize().x - 40), rand() % (getWindowsize().y - 40));
-        if (std::fmod(temp.x, 20.0f) != 0.0f) {
-            temp.x = temp.x - std::fmod(temp.x, 20.0f);
-        }
-        if (std::fmod(temp.y, 20.0f) != 0.0f) {
-            temp.y = temp.y - std::fmod(temp.y, 20.0f);
-        }
-        food.setposition(temp);
-    }
-    if (food.getfood().getPosition().y < 0) {
+    if ((food.getfood().getPosition().x > getWindowsize().x - 20) || (food.getfood().getPosition().y < 0) || (food.getfood().getPosition().y > getWindowsize().y - 20) || (food.getfood().getPosition().x < 0)) {
         sf::Vector2f temp = sf::Vector2f(rand() % (getWindowsize().x - 40), rand() % (getWindowsize().y - 40));
         if (std::fmod(temp.x, 20.0f) != 0.0f) {
             temp.x = temp.x - std::fmod(temp.x, 20.0f);
@@ -283,6 +293,7 @@ void Game::checkCollisionSP() {
 
 
 void Game::checkCollisionMP() {
+
     if (snake.getsnakehead().getPosition().x < 0) {
         snake.setposition(sf::Vector2f(getWindowsize().x - 20, snake.getsnakehead().getPosition().y));
     }
@@ -295,6 +306,7 @@ void Game::checkCollisionMP() {
     if (snake.getsnakehead().getPosition().y > getWindowsize().y - 20) {
         snake.setposition(sf::Vector2f(snake.getsnakehead().getPosition().x, 0));
     }
+
     for (int i = 0; i < snake.getlength(); i++) {
         if (snake.getsnakehead().getPosition() == snake.getsnakebody(i).getPosition()) {
             reset();
@@ -315,6 +327,7 @@ void Game::checkCollisionMP() {
     if (snake2.getsnakehead().getPosition().y > getWindowsize().y - 20) {
         snake2.setposition(sf::Vector2f(snake2.getsnakehead().getPosition().x, 0));
     }
+
     for (int i = 0; i < snake2.getlength(); i++) {
         if (snake2.getsnakehead().getPosition() == snake2.getsnakebody(i).getPosition()) {
             reset();
@@ -322,6 +335,7 @@ void Game::checkCollisionMP() {
             winnerisPlayer2 = true;
         }
     }
+
     if (snake.getsnakehead().getGlobalBounds().intersects(food.getfood().getGlobalBounds())) {
         snake.grow();
         sf::Vector2f temp = sf::Vector2f(rand() % (getWindowsize().x - 40), rand() % (getWindowsize().y - 40));
@@ -333,7 +347,11 @@ void Game::checkCollisionMP() {
         }
         food.setposition(temp);
         score.setScore(score.getScoreValue() + 1);
+        if (score.getScoreValue() % 10 == 0) {
+            speed = speed - 1;
+        }
     }
+
     if (snake2.getsnakehead().getGlobalBounds().intersects(food.getfood().getGlobalBounds())) {
         snake2.grow();
         sf::Vector2f temp = sf::Vector2f(rand() % (getWindowsize().x - 40), rand() % (getWindowsize().y - 40));
@@ -344,7 +362,10 @@ void Game::checkCollisionMP() {
             temp.y = temp.y - std::fmod(temp.y, 20.0f);
         }
         food.setposition(temp);
-        score.setScore(score.getScoreValue() + 1);
+        score2.setScore(score2.getScoreValue() + 1);
+        if (score2.getScoreValue() % 10 == 0) {
+            speed = speed - 1;
+        }
     }
 
     if (food.getfood().getPosition().y > getWindowsize().y - 20) {
@@ -357,6 +378,7 @@ void Game::checkCollisionMP() {
         }
         food.setposition(temp);
     }
+
     for (int i = 0; i < snake2.getlength(); i++) {
         if (snake.getsnakehead().getPosition() == snake2.getsnakebody(i).getPosition()) {
             reset();
@@ -364,6 +386,7 @@ void Game::checkCollisionMP() {
             winnerisPlayer2 = false;
         }
     }
+
     for (int i = 0; i < snake.getlength(); i++) {
         if (snake2.getsnakehead().getPosition() == snake.getsnakebody(i).getPosition()) {
             reset();
@@ -371,6 +394,7 @@ void Game::checkCollisionMP() {
             winnerisPlayer2 = true;
         }
     }
+
 }
 
 
@@ -380,11 +404,24 @@ void Game::drawWelcomeScreen() {
     SPstart.setFillColor(sf::Color::Green);
     SPstart.setOutlineColor(sf::Color::White);
     SPstart.setOutlineThickness(-2);
+
     MPstart.setSize(sf::Vector2f(200.f, 100.f));
     MPstart.setPosition(window.getSize().x / 2 - MPstart.getSize().x / 2, window.getSize().y / 2 + 50);
     MPstart.setFillColor(sf::Color::Green);
     MPstart.setOutlineColor(sf::Color::White);
     MPstart.setOutlineThickness(-2);
+
+    if (isHard) {
+        HardCheckBox.setFillColor(sf::Color::Green);
+    }
+    else {
+        HardCheckBox.setFillColor(sf::Color::Red);
+    }
+    HardCheckBox.setSize(sf::Vector2f(20.f, 20.f));
+    HardCheckBox.setPosition(window.getSize().x / 2 - SPstart.getSize().x / 2 + 50, window.getSize().y / 2 - 150);
+    HardCheckBox.setOutlineColor(sf::Color::White);
+    HardCheckBox.setOutlineThickness(-2);
+
     sf::Font font;
     if (!font.loadFromFile("data/arial.ttf")) {
         std::cout << "Error loading font" << std::endl;
@@ -393,16 +430,20 @@ void Game::drawWelcomeScreen() {
     sf::Text text1;
     sf::Text SPstartButtontext;
     sf::Text MPstartButtontext;
+    sf::Text HardCheckBoxText;
+
     text.setFont(font);
     text.setString("Welcome to Snake");
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::White);
     text.setPosition(window.getSize().x/2 - 100, window.getSize().y/2 - 200);
+
     text1.setFont(font);
     text1.setString("@Created as a course work for MIREA by Ivan Maltsev");
     text1.setCharacterSize(24);
     text1.setFillColor(sf::Color::White);
     text1.setPosition(window.getSize().x/2 - 300, window.getSize().y - 100);
+
     SPstartButtontext.setFont(font);
     SPstartButtontext.setString("Single Player");
     SPstartButtontext.setCharacterSize(24);
@@ -410,6 +451,7 @@ void Game::drawWelcomeScreen() {
     SPstartButtontext.setOutlineColor(sf::Color::Black);
     SPstartButtontext.setOutlineThickness(1);
     SPstartButtontext.setPosition(SPstart.getPosition().x + 25, SPstart.getPosition().y + 35);
+
     MPstartButtontext.setFont(font);
     MPstartButtontext.setString("Multi Player");
     MPstartButtontext.setCharacterSize(24);
@@ -418,12 +460,22 @@ void Game::drawWelcomeScreen() {
     MPstartButtontext.setOutlineThickness(1);
     MPstartButtontext.setPosition(MPstart.getPosition().x + 35, MPstart.getPosition().y + 35);
 
+    HardCheckBoxText.setFont(font);
+    HardCheckBoxText.setString("Hard Mode");
+    HardCheckBoxText.setCharacterSize(24);
+    HardCheckBoxText.setFillColor(sf::Color::White);
+    HardCheckBoxText.setOutlineColor(sf::Color::Black);
+    HardCheckBoxText.setOutlineThickness(1);
+    HardCheckBoxText.setPosition(HardCheckBox.getPosition().x + 35, HardCheckBox.getPosition().y - 5);
+
     window.draw(text);
     window.draw(text1);
     window.draw(SPstart);
     window.draw(MPstart);
     window.draw(SPstartButtontext);
     window.draw(MPstartButtontext);
+    window.draw(HardCheckBox);
+    window.draw(HardCheckBoxText);
 }
 
 void Game::drawPauseScreen() {
@@ -432,11 +484,13 @@ void Game::drawPauseScreen() {
     resumeButton.setFillColor(sf::Color::Green);
     resumeButton.setOutlineColor(sf::Color::White);
     resumeButton.setOutlineThickness(-2);
+
     endButton.setSize(sf::Vector2f(200, 100));
     endButton.setPosition(window.getSize().x/2 - endButton.getSize().x/2,  window.getSize().y/2 );
     endButton.setFillColor(sf::Color::Red);
     endButton.setOutlineColor(sf::Color::White);
     endButton.setOutlineThickness(-2);
+
     sf::Font font;
     if (!font.loadFromFile("data/arial.ttf")) {
         std::cout << "Error loading font" << std::endl;
@@ -449,6 +503,7 @@ void Game::drawPauseScreen() {
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::White);
     text.setPosition(window.getSize().x / 2 - 50, window.getSize().y / 2 - 200);
+
     resumeButtontext.setFont(font);
     resumeButtontext.setString("Resume");
     resumeButtontext.setCharacterSize(24);
@@ -456,6 +511,7 @@ void Game::drawPauseScreen() {
     resumeButtontext.setOutlineColor(sf::Color::Black);
     resumeButtontext.setOutlineThickness(1);
     resumeButtontext.setPosition(resumeButton.getPosition().x + 56, resumeButton.getPosition().y + 35);
+
     endButtontext.setFont(font);
     endButtontext.setString("End");
     endButtontext.setCharacterSize(24);
@@ -474,9 +530,18 @@ void Game::drawPauseScreen() {
 void Game::drawSPGame() {
     renderer.renderscore(window, score.getScore());
     checkCollisionSP();
-    if (clock.getElapsedTime().asSeconds() > 0.1) {
+    if (clock.getElapsedTime().asMilliseconds() > 100 && !isHard) {
         snake.move(window);
         clock.restart();
+    }
+    else if (isHard) {
+        if (clock.getElapsedTime().asMilliseconds() > speed) {
+            if (speed < 25) {
+                speed = 25;
+            }
+            snake.move(window);
+            clock.restart();
+        }
     }
     renderer.renderfood(window, food.getfood());
     window.draw(snake.getsnakehead());
@@ -488,21 +553,33 @@ void Game::drawSPGame() {
 void Game::drawMPGame() {
     renderer.renderscore(window, score.getScore(), score2.getScore());
     checkCollisionMP();
-    if (clock.getElapsedTime().asSeconds() > 0.1) {
+    if (clock.getElapsedTime().asMilliseconds() > 100 && !isHard) {
         snake.move(window);
         snake2.setColor(sf::Color::Blue, sf::Color::Cyan);
         snake2.move(window);
         clock.restart();
     }
-    renderer.renderfood(window, food.getfood());
-    window.draw(snake.getsnakehead());
-    for (int i = 0; i < snake.getlength(); i++) {
-        window.draw(snake.getsnakebody(i));
+    else if (isHard) {
+        if (clock.getElapsedTime().asMilliseconds() > speed) {
+            if (speed < 25) {
+                speed = 25;
+            }
+            snake.move(window);
+            snake2.setColor(sf::Color::Blue, sf::Color::Cyan);
+            snake2.move(window);
+            clock.restart();
+        }
     }
-    window.draw(snake2.getsnakehead());
-    for (int i = 0; i < snake2.getlength(); i++) {
-        window.draw(snake2.getsnakebody(i));
-    }
+        renderer.renderfood(window, food.getfood());
+        window.draw(snake.getsnakehead());
+        for (int i = 0; i < snake.getlength(); i++) {
+            window.draw(snake.getsnakebody(i));
+        }
+        window.draw(snake2.getsnakehead());
+        for (int i = 0; i < snake2.getlength(); i++) {
+            window.draw(snake2.getsnakebody(i));
+        }
+
 }
 
 void Game::drawEndScreen() {
@@ -522,11 +599,13 @@ void Game::drawEndScreen() {
     text.setCharacterSize(24);
     text.setFillColor(sf::Color::White);
     text.setPosition(window.getSize().x/2 - 50, window.getSize().y/2 - 200);
+
     text1.setFont(font);
     text1.setString("Player 1 score: " + std::to_string(score.getScoreValue()) + "\n" + "Player 2 score: " + std::to_string(score2.getScoreValue()));
     text1.setCharacterSize(24);
     text1.setFillColor(sf::Color::White);
     text1.setPosition(window.getSize().x/2 - 200, window.getSize().y/2 - 100);
+
     EndButtontext.setFont(font);
     EndButtontext.setString("End");
     EndButtontext.setCharacterSize(24);
@@ -534,11 +613,13 @@ void Game::drawEndScreen() {
     EndButtontext.setOutlineColor(sf::Color::Black);
     EndButtontext.setOutlineThickness(1);
     EndButtontext.setPosition(endButton.getPosition().x + 74, endButton.getPosition().y + 35);
+
     endButton.setSize(sf::Vector2f(200, 100));
     endButton.setPosition(window.getSize().x/2 - endButton.getSize().x/2,  window.getSize().y/2 );
     endButton.setFillColor(sf::Color::Red);
     endButton.setOutlineColor(sf::Color::White);
     endButton.setOutlineThickness(-2);
+
     window.draw(text);
     window.draw(text1);
     window.draw(endButton);
