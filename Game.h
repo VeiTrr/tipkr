@@ -32,11 +32,13 @@ private:
     sf::RectangleShape MPstart; //multi player start
     sf::RectangleShape resumeButton;
     sf::RectangleShape endButton;
+    sf::RectangleShape HardCheckBox;
     bool isStarted = false;
     bool isPaused = false;
     bool isSinglePlayer = false;
     bool winnerisPlayer2 = false;
     bool isEnd = false;
+    bool isHard = false;
     Snake snake;
     Snake snake2;
     Food food;
@@ -47,6 +49,7 @@ private:
     Input input;
     Renderer renderer;
     sf::Clock clock;
+    int speed = 100;
     sf::Image icon;
 };
 
